@@ -1,0 +1,10 @@
+*.dylib
+*.o
+*.dll
+.DS_Store
+.*.swp
+.*.swo
+build/
+*-gmake/
+*~
+*.user
