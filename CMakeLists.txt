@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(optitrack)
+project(oculus)
 
 #-----------------
 
@@ -26,9 +26,11 @@ if(CMAKE_SYSTEM_NAME MATCHES "Windows")
 	target_link_libraries(${CMAKE_PROJECT_NAME} Ws2_32)
 endif(CMAKE_SYSTEM_NAME MATCHES "Windows")
 
+target_link_libraries(${CMAKE_PROJECT_NAME} /usr/local/lib/libovr.a)
+
 #-----------------
 
-set(STEAM_DIR "/Users/sven/Library/Application Support/Steam/")
+set(STEAM_DIR "/Users/$ENV{USER}/Library/Application Support/Steam/")
 set(CMAKE_INSTALL_PREFIX "${STEAM_DIR}/SteamApps/common/GarrysMod/garrysmod/lua")
 
 INSTALL(TARGETS ${CMAKE_PROJECT_NAME}

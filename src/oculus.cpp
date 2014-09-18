@@ -48,7 +48,7 @@ int setSkeletonCallback(lua_State *state)
 
 
 //
-// Called when you module is opened
+// Called when your module is opened
 //
 GMOD_MODULE_OPEN()
 {
