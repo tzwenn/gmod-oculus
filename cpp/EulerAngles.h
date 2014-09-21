@@ -19,9 +19,11 @@ struct EulerAngles
 
 		Quatd quat(q.w, q.x, q.y, q.z);
 
-		quat.GetEulerAngles<Axis_X, Axis_Y, Axis_Z, Rotate_CCW, Handed_R>(&yaw, &pitch, &roll);
-		yaw *= scale;
+		//quat.GetEulerAngles<Axis_Y, Axis_X, Axis_Z, Rotate_CW, Handed_L>(&yaw, &pitch, &roll);
+		quat.GetEulerAngles<Axis_Y, Axis_Z, Axis_X, Rotate_CCW, Handed_L>(&yaw, &pitch, &roll);
 		pitch *= scale;
+		yaw *= scale;
 		roll *= scale;
+		roll -= 180;
 	}
 };

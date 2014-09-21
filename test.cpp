@@ -29,7 +29,7 @@ int main()
 			angles = EulerAngles(pose.Rotation);
 		}
 		ovrHmd_EndFrame(hmd);
-		printf("%f\t%f\t%f\n", angles.yaw, angles.pitch, angles.roll);
+		printf("%f\t%f\t%f\n", angles.pitch, angles.yaw, angles.roll);
 	}
 
 	ovrHmd_Destroy(hmd);

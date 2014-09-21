@@ -39,8 +39,8 @@ int OculusGetRotation(lua_State *state)
 		ovrHmd_EndFrame(hmd);
 	}
 
-	LUA->PushNumber(angles.yaw);
 	LUA->PushNumber(angles.pitch);
+	LUA->PushNumber(angles.yaw);
 	LUA->PushNumber(angles.roll);
 	return 3;
 }
