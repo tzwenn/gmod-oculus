@@ -1,4 +1,5 @@
-#include <OVR.h>
+#include <OVR_CAPI.h>
+#include <Extras/OVR_Math.h>
 
 struct EulerAngles
 {
@@ -19,7 +20,6 @@ struct EulerAngles
 
 		Quatd quat(q.x, q.y, q.z, q.w);
 
-		//quat.GetEulerAngles<Axis_Y, Axis_X, Axis_Z, Rotate_CW, Handed_L>(&yaw, &pitch, &roll);
 		quat.GetEulerAngles<Axis_Y, Axis_Z, Axis_X, Rotate_CCW, Handed_L>(&yaw, &roll, &pitch);
 		pitch *= scale;
 		yaw *= scale * -1;

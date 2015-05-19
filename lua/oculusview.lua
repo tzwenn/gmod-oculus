@@ -23,4 +23,5 @@ function StopOcculus()
 	manually_pp_stereoscpy = false
 end
 
-StartOcculus()
+OculusReconnect()
+

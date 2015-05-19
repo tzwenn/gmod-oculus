@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(oculus)
+project(oculusdrv)
 
 #-----------------
 
@@ -35,7 +35,7 @@ if(CMAKE_SYSTEM_NAME MATCHES "Windows")
 endif(CMAKE_SYSTEM_NAME MATCHES "Windows")
 
 set(LIBRARIES
-	"${OVR_PATH}/Lib/MacOS/Release/libovr.a"
+	"${OVR_PATH}/Lib/Mac/Release/LibOVR.framework"
 	"-framework CoreFoundation"
 	"-framework ApplicationServices"
 	"-framework IOKit"
@@ -44,21 +44,6 @@ set(LIBRARIES
 target_link_libraries(${CMAKE_PROJECT_NAME}
 	${LIBRARIES})
 
-#-----------------
-
-add_executable(${CMAKE_PROJECT_NAME}_test
-	test.cpp
-	${LUA_FILES}
-)
-
-target_link_libraries(${CMAKE_PROJECT_NAME}_test
-	${CMAKE_PROJECT_NAME}
-	${LIBRARIES}
-)
-
-set_target_properties(${CMAKE_PROJECT_NAME}_test PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
-
-#-----------------
 
 set(STEAM_DIR "/Users/$ENV{USER}/Library/Application Support/Steam")
 set(CMAKE_INSTALL_PREFIX "${STEAM_DIR}/SteamApps/common/GarrysMod/garrysmod/lua")
@@ -67,3 +52,6 @@ INSTALL(TARGETS ${CMAKE_PROJECT_NAME}
 	LIBRARY DESTINATION bin
 )
 
+INSTALL(FILES lua/oculus.lua
+	DESTINATION postprocess
+)
