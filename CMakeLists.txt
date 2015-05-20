@@ -44,6 +44,21 @@ set(LIBRARIES
 target_link_libraries(${CMAKE_PROJECT_NAME}
 	${LIBRARIES})
 
+#-----------------
+
+add_executable(${CMAKE_PROJECT_NAME}_test
+	test.cpp
+	${LUA_FILES}
+)
+
+target_link_libraries(${CMAKE_PROJECT_NAME}_test
+	${CMAKE_PROJECT_NAME}
+	${LIBRARIES}
+)
+
+set_target_properties(${CMAKE_PROJECT_NAME}_test PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+
+#-----------------
 
 set(STEAM_DIR "/Users/$ENV{USER}/Library/Application Support/Steam")
 set(CMAKE_INSTALL_PREFIX "${STEAM_DIR}/SteamApps/common/GarrysMod/garrysmod/lua")
