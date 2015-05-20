@@ -24,4 +24,5 @@ function StopOcculus()
 end
 
 OculusReconnect()
+StartOcculus()
 

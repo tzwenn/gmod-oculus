@@ -40,7 +40,6 @@ local function RenderStereoOculus( ViewOrigin, ViewAngles )
 	
 end
 
-
 --[[---------------------------------------------------------
    The function to draw the bloom (called from the hook)
 -----------------------------------------------------------]]
@@ -56,16 +55,30 @@ local function DrawInternal( ViewOrigin, ViewAngles, ViewFOV )
 end
 hook.Add( "RenderScene", "RenderStereoOculus", DrawInternal )
 
+--[[---------------------------------------------------------
+   The function to set the camera rotation according to the IMU
+-----------------------------------------------------------]]
 require("oculusdrv")
 local function OculusView( ply, pos, angles, fov )
+
+	if ( !pp_oculus:GetBool() && !manually_pp_stereoscpy ) then
+		return {}
+	end
+
 	local view = {}
 
 	view.origin = pos
 	pitch, yaw, roll = OculusGetRotation()
-	view.angles = Angle(pitch, yaw + angles.y, roll * 0)
+	view.angles = Angle(pitch, yaw + angles.y, 0)
 	view.fov = fov
 
 	return view
+end
+hook.Add("CalcView", "OculusView", OculusView)
+
+local function AlignOculus()
+	OculusResetSensor()
+	LocalPlayer():PrintMessage(HUD_PRINTTALK, "Aligned oculus" )
 end
 
 list.Set( "PostProcess", "#oculus_pp", {
@@ -78,15 +91,16 @@ list.Set( "PostProcess", "#oculus_pp", {
 
 		CPanel:AddControl( "Header", { Description = "#oculus_pp.desc" } )
 		CPanel:AddControl( "CheckBox", { Label = "#oculus_pp.enable", Command = "pp_oculus" } )
-		
-		local params = { Options = {}, CVars = {}, MenuButton = "1", Folder = "oculus" }
-		params.Options[ "#preset.default" ] = { pp_oculus_size = "6" }
-		params.CVars = table.GetKeys( params.Options[ "#preset.default" ] )
-		CPanel:AddControl( "ComboBox", params )
 
 		CPanel:AddControl( "Slider", { Label = "#oculus_pp.size", Command = "pp_oculus_size", Type = "Float", Min = "0", Max = "10" } )
-		CPanel:AddControl( "Slider", { Label = "Eyeshift", Command = "pp_oculus_eyeshift", Type = "Float", Min = "0", Max = "10" } )
-		
+		CPanel:AddControl( "Slider", { Label = "#oculus_pp.eyeshift", Command = "pp_oculus_eyeshift", Type = "Float", Min = "0", Max = "10" } )
+
+		---------------
+		local resetButton = vgui.Create( "DButton", CPanel )
+		resetButton:SetText( "#oculus_pp.reset" )
+		resetButton.DoClick = AlignOculus
+		CPanel:AddItem( resetButton, nil )
+
 	end
 	
 } )
