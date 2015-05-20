@@ -76,12 +76,7 @@ local function OculusView( ply, pos, angles, fov )
 end
 hook.Add("CalcView", "OculusView", OculusView)
 
-local function AlignOculus()
-	OculusResetSensor()
-	LocalPlayer():PrintMessage(HUD_PRINTTALK, "Aligned oculus" )
-end
-
-list.Set( "PostProcess", "#oculus_pp", {
+list.Set( "PostProcess", "Oculus Rift Support", {
 
 	icon		= "gui/postprocess/stereoscopy.png",
 	convar		= "pp_oculus",
@@ -89,16 +84,16 @@ list.Set( "PostProcess", "#oculus_pp", {
 
 	cpanel		= function( CPanel )
 
-		CPanel:AddControl( "Header", { Description = "#oculus_pp.desc" } )
-		CPanel:AddControl( "CheckBox", { Label = "#oculus_pp.enable", Command = "pp_oculus" } )
+		CPanel:AddControl( "Header", { Description = "Stereoscopic view with Oculus Rift IMU support." } )
+		CPanel:AddControl( "CheckBox", { Label = "Enable", Command = "pp_oculus" } )
 
-		CPanel:AddControl( "Slider", { Label = "#oculus_pp.size", Command = "pp_oculus_size", Type = "Float", Min = "0", Max = "10" } )
-		CPanel:AddControl( "Slider", { Label = "#oculus_pp.eyeshift", Command = "pp_oculus_eyeshift", Type = "Float", Min = "0", Max = "10" } )
+		CPanel:AddControl( "Slider", { Label = "Size:", Command = "pp_oculus_size", Type = "Float", Min = "0", Max = "10" } )
+		CPanel:AddControl( "Slider", { Label = "Eyeshift:", Command = "pp_oculus_eyeshift", Type = "Float", Min = "0", Max = "10" } )
 
 		---------------
 		local resetButton = vgui.Create( "DButton", CPanel )
-		resetButton:SetText( "#oculus_pp.reset" )
-		resetButton.DoClick = AlignOculus
+		resetButton:SetText( "Reset Orientation" )
+		resetButton.DoClick = OculusResetSensor
 		CPanel:AddItem( resetButton, nil )
 
 	end
